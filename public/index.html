@@ -1,0 +1,37 @@
+<html>
+    <body>
+        <script src="simplepeer.min.js"></script>
+        <script>
+            navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: true
+            }).then(stream => {
+                console.log('start');
+                const p = new SimplePeer({
+                    initiator: true,
+                    trickle: false,
+                    stream,
+                });
+
+                p.on('signal', data => {
+                    console.log('offer');
+                    fetch("/offer", {
+                        method: "POST",
+                        headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data),
+                    }).then(response => {
+                        console.log('answer');
+
+                        p.signal(response.json());
+
+                        p.on('connect', () => console.log('connect'));
+                    })
+                });
+
+            }).catch(error => console.log(error.message));
+    </script>
+  </body>
+</html>
