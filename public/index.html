@@ -27,7 +27,7 @@
                     .then(response => {
                         console.log('answer');
 
-                        p.signal(response.json());
+                        p.signal(response);
 
                         p.on('connect', () => console.log('connect'));
                     })
