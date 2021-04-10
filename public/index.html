@@ -1,41 +1,11 @@
+<!DOCTYPE html>
 <html>
     <body>
-        <script src="simplepeer.min.js"></script>
-        <script>
-            navigator.mediaDevices.getUserMedia({
-                video: true,
-                audio: true
-            }).then(stream => {
-                console.log('start');
-                const p = new SimplePeer({
-                    initiator: true,
-                    trickle: false,
-                    stream,
-                });
-
-                p.on('signal', data => {
-                    console.log('offer');
-                    fetch("/offer", {
-                        method: "POST",
-                        headers: {
-                            Accept: "application/json",
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(data),
-                    })
-                    .then(response => response.json())
-                    .then(response => {
-                        console.log('answer');
-
-                        p.signal(response);
-
-                        p.on('connect', () => console.log('connect'));
-                        p.on('stream', () => console.log('stream'));
-                        p.on('data', () => console.log('data'));
-                    })
-                });
-
-            }).catch(error => console.log(error.message));
-    </script>
+        <script src="face-api.min.js"></script>
+        <video id="video" width="640" height="480" controls autoplay loop>
+            <source src="video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <script src="script.js"></script>
   </body>
 </html>
