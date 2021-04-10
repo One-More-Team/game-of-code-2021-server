@@ -31,6 +31,7 @@
 
                         p.on('connect', () => console.log('connect'));
                         p.on('stream', () => console.log('stream'));
+                        p.on('data', () => console.log('data'));
                     })
                 });
 
