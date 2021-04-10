@@ -30,6 +30,7 @@
                         p.signal(response);
 
                         p.on('connect', () => console.log('connect'));
+                        p.on('stream', () => console.log('stream'));
                     })
                 });
 
