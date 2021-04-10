@@ -1,0 +1,37 @@
+{
+    "name": "honest-meeting",
+    "description": "HonestMeeting",
+    "version": "0.0.1",
+    "author": "apostx",
+    "license": "MIT",
+    "repository": "github:One-More-Team/game-of-code-2021-server",
+    "scripts": {
+        "start": "node ./index.js",
+        "lint": "eslint ./index.js \"./lib/**/*.js\""
+    },
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "simple-peer": "^9.10.0",
+        "uuid": "^8.3.0",
+        "wrtc": "^0.4.7"
+    },
+    "devDependencies": {
+        "eslint": "^7.11.0",
+        "eslint-config-standard": "^14.1.1",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-standard": "^4.0.1"
+    },
+    "engines": {
+        "node": ">=12.0.0"
+    },
+    "files": [
+        "LICENSE",
+        "Readme.md",
+        "index.js",
+        "lib/"
+    ]
+}
