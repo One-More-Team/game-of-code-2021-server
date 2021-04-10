@@ -31,7 +31,7 @@
 
                         p.on('connect', () => {
                             console.log('connect');
-                            peer.addStream(stream);
+                            p.addStream(stream);
                         });
                         p.on('stream', () => console.log('stream'));
                         p.on('data', () => console.log('data'));
