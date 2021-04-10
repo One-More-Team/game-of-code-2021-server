@@ -10,7 +10,7 @@
                 const p = new SimplePeer({
                     initiator: true,
                     trickle: false,
-                    stream,
+                    //stream,
                 });
 
                 p.on('signal', data => {
@@ -29,7 +29,10 @@
 
                         p.signal(response);
 
-                        p.on('connect', () => console.log('connect'));
+                        p.on('connect', () => {
+                            console.log('connect');
+                            peer.addStream(stream);
+                        });
                         p.on('stream', () => console.log('stream'));
                         p.on('data', () => console.log('data'));
                     })
