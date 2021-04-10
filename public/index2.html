@@ -1,0 +1,45 @@
+<html>
+    <body>
+        <script src="simplepeer.min.js"></script>
+        <script>
+            navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: true
+            }).then(stream => {
+                console.log('start');
+                const p1 = new SimplePeer({
+                    initiator: true,
+                    trickle: false,
+                    stream,
+                });
+
+                const p2 = new SimplePeer({
+                    initiator: false,
+                    trickle: false,
+                    stream,
+                });
+
+                p1.on('signal', data => {
+                    console.log('offer');
+
+                    p2.signal(data);
+
+                    p1.on('signal', data => {
+                        console.log('answer');
+
+                        p2.signal(data);
+                    });
+                });
+
+                p1.on('connect', () => console.log('connect #1'));
+                p1.on('stream', () => console.log('stream #1'));
+                p1.on('data', () => console.log('data #1'));
+
+                p2.on('connect', () => console.log('connect #2'));
+                p2.on('stream', () => console.log('stream #2'));
+                p2.on('data', () => console.log('data #2'));
+            })
+                .catch(error => console.log(error.message));
+    </script>
+  </body>
+</html>
