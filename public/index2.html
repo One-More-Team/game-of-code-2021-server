@@ -3,31 +3,34 @@
     <body>
         <script>
             function getDynamicRange(buffer) {
-                var len = buffer.length
-                var min = 128
-                var max = 128
+                var len = buffer.length;
+                var min = 128;
+                var max = 128;
 
                 for (var i = 0; i < len; i++) {
                     var sample = buffer[i]
-                    if (sample < min) min = sample
-                    else if (sample > max) max = sample
+                    if (sample < min) {
+                        min = sample;
+                    } else if (sample > max) {
+                        max = sample;
+                    }
                 }
 
-                return (max - min) / 255
+                return max - min;
             }
 
             async function init() {
                 let stream = null;
                 try {
-                    stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-                    /* use the stream */
+                    stream = await navigator.mediaDevices.getUserMedia({audio: true, video: false});
                 } catch(err) {
-                    /* handle the error */
+                    return;
                 }
 
                 const audioContext = new AudioContext();
-                const mediaStreamAudioSourceNode = audioContext.createMediaStreamSource(stream);
-                mediaStreamAudioSourceNode.connect(audioContext.destination);
+                
+                //const mediaStreamAudioSourceNode = audioContext.createMediaStreamSource(stream);
+                //mediaStreamAudioSourceNode.connect(audioContext.destination);
 
                 const fftSize = 32;
 
@@ -35,15 +38,19 @@
                 const analyser = audioContext.createAnalyser();
                 analyser.fftSize = fftSize;
 
+                var input = audioContext.createMediaStreamSource(stream);
+                input.connect(analyser);
+                analyser.connect(audioContext.destination);
+
                 function measure() {
                     analyser.getByteTimeDomainData(buffer);
-                    const range = getDynamicRange(buffer) * (Math.E - 1);
-                    const next = Math.floor(Math.log1p(range) * 100);
+                    const range = getDynamicRange(buffer);
+                    //const next = Math.floor(Math.log1p(range) * 100);
 
-                    console.log(next);
+                    console.log(range);
                 }
 
-                setInterval(measure, 1000);
+                setInterval(measure, 100);
             }
 
             init();
