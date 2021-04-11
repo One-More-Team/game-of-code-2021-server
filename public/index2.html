@@ -40,7 +40,7 @@
 
                 var input = audioContext.createMediaStreamSource(stream);
                 input.connect(analyser);
-                analyser.connect(audioContext.destination);
+                //analyser.connect(audioContext.destination);
 
                 function measure() {
                     analyser.getByteTimeDomainData(buffer);
